@@ -31,6 +31,7 @@ use stdClass;
 use function call_user_func_array;
 use function class_exists;
 use function json_decode;
+use function property_exists;
 
 use const JSON_THROW_ON_ERROR;
 
@@ -207,9 +208,9 @@ class ChildEntitiesIntegrationTest extends TestCase
 
         $json = $this->renderer->render($model);
         $test = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-        self::assertObjectHasAttribute('_links', $test);
-        self::assertObjectHasAttribute('self', $test->_links);
-        self::assertObjectHasAttribute('href', $test->_links->self);
+        self::assertTrue(property_exists($test, '_links'));
+        self::assertTrue(property_exists($test->_links, 'self'));
+        self::assertTrue(property_exists($test->_links->self, 'href'));
         self::assertEquals('http://localhost.localdomain/api/parent/anakin', $test->_links->self->href);
     }
 
@@ -234,9 +235,9 @@ class ChildEntitiesIntegrationTest extends TestCase
 
         $json = $this->renderer->render($model);
         $test = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-        self::assertObjectHasAttribute('_links', $test);
-        self::assertObjectHasAttribute('self', $test->_links);
-        self::assertObjectHasAttribute('href', $test->_links->self);
+        self::assertTrue(property_exists($test, '_links'));
+        self::assertTrue(property_exists($test->_links, 'self'));
+        self::assertTrue(property_exists($test->_links->self, 'href'));
         self::assertEquals('http://localhost.localdomain/api/parent/anakin/child/luke', $test->_links->self->href);
     }
 
@@ -261,20 +262,20 @@ class ChildEntitiesIntegrationTest extends TestCase
 
         $json = $this->renderer->render($model);
         $test = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-        self::assertObjectHasAttribute('_links', $test);
-        self::assertObjectHasAttribute('self', $test->_links);
-        self::assertObjectHasAttribute('href', $test->_links->self);
+        self::assertTrue(property_exists($test, '_links'));
+        self::assertTrue(property_exists($test->_links, 'self'));
+        self::assertTrue(property_exists($test->_links->self, 'href'));
         self::assertEquals('http://localhost.localdomain/api/parent/anakin/child', $test->_links->self->href);
 
-        self::assertObjectHasAttribute('_embedded', $test);
-        self::assertObjectHasAttribute('child', $test->_embedded);
+        self::assertTrue(property_exists($test, '_embedded'));
+        self::assertTrue(property_exists($test->_embedded, 'child'));
         self::assertIsArray($test->_embedded->child);
         self::assertCount(2, $test->_embedded->child);
 
         foreach ($test->_embedded->child as $child) {
-            self::assertObjectHasAttribute('_links', $child);
-            self::assertObjectHasAttribute('self', $child->_links);
-            self::assertObjectHasAttribute('href', $child->_links->self);
+            self::assertTrue(property_exists($child, '_links'));
+            self::assertTrue(property_exists($child->_links, 'self'));
+            self::assertTrue(property_exists($child->_links->self, 'href'));
 
             self::assertMatchesRegularExpression(
                 '#^http://localhost.localdomain/api/parent/anakin/child/[^/]+$#',
@@ -338,9 +339,9 @@ class ChildEntitiesIntegrationTest extends TestCase
 
         $json = $this->renderer->render($model);
         $test = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-        self::assertObjectHasAttribute('_links', $test);
-        self::assertObjectHasAttribute('self', $test->_links);
-        self::assertObjectHasAttribute('href', $test->_links->self);
+        self::assertTrue(property_exists($test, '_links'));
+        self::assertTrue(property_exists($test->_links, 'self'));
+        self::assertTrue(property_exists($test->_links->self, 'href'));
         self::assertEquals('http://localhost.localdomain/api/parent/anakin/child/luke', $test->_links->self->href);
     }
 
@@ -367,20 +368,20 @@ class ChildEntitiesIntegrationTest extends TestCase
 
         $json = $this->renderer->render($model);
         $test = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-        self::assertObjectHasAttribute('_links', $test);
-        self::assertObjectHasAttribute('self', $test->_links);
-        self::assertObjectHasAttribute('href', $test->_links->self);
+        self::assertTrue(property_exists($test, '_links'));
+        self::assertTrue(property_exists($test->_links, 'self'));
+        self::assertTrue(property_exists($test->_links->self, 'href'));
         self::assertEquals('http://localhost.localdomain/api/parent/anakin/child', $test->_links->self->href);
 
-        self::assertObjectHasAttribute('_embedded', $test);
-        self::assertObjectHasAttribute('child', $test->_embedded);
+        self::assertTrue(property_exists($test, '_embedded'));
+        self::assertTrue(property_exists($test->_embedded, 'child'));
         self::assertIsArray($test->_embedded->child);
         self::assertCount(2, $test->_embedded->child);
 
         foreach ($test->_embedded->child as $child) {
-            self::assertObjectHasAttribute('_links', $child);
-            self::assertObjectHasAttribute('self', $child->_links);
-            self::assertObjectHasAttribute('href', $child->_links->self);
+            self::assertTrue(property_exists($child, '_links'));
+            self::assertTrue(property_exists($child->_links, 'self'));
+            self::assertTrue(property_exists($child->_links->self, 'href'));
             self::assertMatchesRegularExpression(
                 '#^http://localhost.localdomain/api/parent/anakin/child/[^/]+$#',
                 $child->_links->self->href
